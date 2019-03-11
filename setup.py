@@ -18,7 +18,6 @@ setup(
     install_requires=["Click", "python-dateutil", "ruamel.yaml"],
     entry_points="""
         [console_scripts]
-        pyloan=pyloan.main:main
-        pyloanng=pyloan.app:cli
+        pyloan=pyloan.app:cli
     """,
 )
