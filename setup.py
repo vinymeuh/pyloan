@@ -15,7 +15,7 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     packages=find_packages(),
-    install_requires=["Click", "python-dateutil", "ruamel.yaml"],
+    install_requires=["Click", "colorama", "python-dateutil", "ruamel.yaml"],
     entry_points="""
         [console_scripts]
         pyloan=pyloan.app:cli

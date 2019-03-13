@@ -20,15 +20,17 @@ def cli(verbose):
 @cli.command(help="Compute a repayment plan from a loan definition FILE.")
 @click.argument("file", type=click.Path(exists=True))
 def compute(file):
-    # load loan definition from the yaml file
     yaml = YAML(typ="safe")
     yaml.width = 200
     with open(file, "r") as f:
         loan = yaml.load(f)
 
     loan.compute_repayment_plan()
-    loan.compute_summary()
-    loan.sanity_checks()
+    healthy = loan.sanity_checks()
 
-    with open(file, "w") as f:
-        yaml.dump(loan, stream=f)
+    if healthy is True:
+        with open(file, "w") as f:
+            yaml.dump(loan, stream=f)
+        click.echo(click.style("OK", fg='green'))
+    else:
+        click.echo(click.style("KO - computed repayment plan is incoherent", fg='red'))
