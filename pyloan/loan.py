@@ -128,8 +128,10 @@ class Loan:
             self.repayments[-1]["principal_after"] = 0
 
         logging.debug("all phases have been computed successfully :)")
+        logging.debug("calculation of the repayment summary")
+        self._compute_summary()
 
-    def compute_summary(self):
+    def _compute_summary(self):
         s_duration = 0
         s_interest = 0
         s_insurance = 0
