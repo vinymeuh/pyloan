@@ -6,4 +6,7 @@ install:
   - pip install -r requirements_dev.txt
   - pip install -e .
 script:
-  - pytest
+  - pytest --cov=pyloan
+after_success:
+  — coveralls
+
