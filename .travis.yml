@@ -8,5 +8,4 @@ install:
 script:
   - pytest --cov=pyloan
 after_success:
-  — coveralls
-
+  — codeconv
