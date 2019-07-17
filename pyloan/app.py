@@ -3,9 +3,7 @@
 import click
 import logging
 
-from ruamel.yaml import YAML
 from pyloan.loan import Loan
-
 
 @click.version_option()
 @click.group(context_settings=dict(max_content_width=click.get_terminal_size()[0] - 2))
@@ -20,17 +18,13 @@ def cli(verbose):
 @cli.command(help="Compute a repayment plan from a loan definition FILE.")
 @click.argument("file", type=click.Path(exists=True))
 def compute(file):
-    yaml = YAML(typ="safe")
-    yaml.width = 200
-    with open(file, "r") as f:
-        loan = yaml.load(f)
+    loan = Loan.LoadYAML(file)
 
     loan.compute_repayment_plan()
     healthy = loan.sanity_checks()
 
     if healthy is True:
-        with open(file, "w") as f:
-            yaml.dump(loan, stream=f)
+        loan.SaveYAML(file)
         click.echo(click.style("OK", fg='green'))
     else:
         click.echo(click.style("KO - computed repayment plan is incoherent", fg='red'))

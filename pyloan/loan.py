@@ -7,10 +7,11 @@ from dateutil.relativedelta import relativedelta
 from ruamel.yaml import YAML, yaml_object
 
 yaml = YAML(typ="safe")
-
+yaml.width = 200
 
 @yaml_object(yaml)
 class Loan:
+
     def __init__(self, name, revision, phases):
         self.name = name
         self.revision = revision
@@ -18,6 +19,16 @@ class Loan:
         self.repayments = []
         self.early_repayments = []
         self.summary = {}
+
+    @staticmethod
+    def LoadYAML(file):
+        with open(file, "r") as f:
+            obj = yaml.load(f)
+        return obj
+
+    def SaveYAML(self, file):
+        with open(file, "w") as f:
+            yaml.dump(self, stream=f)
 
     def compute_repayment_plan(self):
         # re-initialize repayment plan
